@@ -1,49 +1,61 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import CourseList from '../components/CourseList';
+import CourseForm from '../components/CourseForm';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
-import { Container, Card, Row, Col } from 'react-bootstrap';
 
-const CoursesPage = () => {
+function CoursesPage() {
   const [courses, setCourses] = useState([]);
-  const { token } = useAuth();
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
+  const token = localStorage.getItem('token');
+  
+const fetchCourses = async () => {
+  try {
+    const res = await axios.get('http://localhost:5000/api/courses', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = Array.isArray(res.data) ? res.data : res.data.data;
+    setCourses(Array.isArray(data) ? data : []);
+  } catch (error) {
+    console.error('Error al obtener los cursos:', error);
+    setCourses([]);
+  }
+};
+
+
+  const saveCourse = async (course) => {
+    if (course._id) {
+      await axios.put(`http://localhost:5000/api/courses/${course._id}`, { title: course.title }, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } else {
+      await axios.post('http://localhost:5000/api/courses/', { title: course.title }, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
+    setSelectedCourse(null);
+    fetchCourses();
+  };
+
+  const deleteCourse = async (id) => {
+    await axios.delete(`http://localhost:5000/api/courses/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    fetchCourses();
+  };
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      if (!token) return  console.log('Token actual:', token); // ⛔ No hacer nada si no hay token  
-      try {
-       
-
-        const response = await axios.get('http://localhost:5000/api/courses', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setCourses(response.data);
-      } catch (error) {
-        console.error('Error al obtener los cursos:', error);
-      }
-    };
-
     fetchCourses();
-  }, [token]);
+  }, []);
 
   return (
-    <Container className="mt-4">
-      <h2 className="mb-4">Listado de Cursos</h2>
-      <Row>
-        {courses.map((course) => (
-          <Col key={course._id} md={4} className="mb-3">
-            <Card>
-              <Card.Body>
-                <Card.Title>{course.title}</Card.Title>
-                <Card.Text>{course.description}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <div className="container mt-4">
+      <h2>Course Management</h2>
+      <CourseForm onSave={saveCourse} selectedCourse={selectedCourse} />
+      <CourseList courses={courses} onEdit={setSelectedCourse} onDelete={deleteCourse} />
+    </div>
   );
-};
+}
 
 export default CoursesPage;
