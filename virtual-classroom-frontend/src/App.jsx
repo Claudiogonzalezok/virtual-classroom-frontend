@@ -4,6 +4,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import CoursesPage from './pages/CoursesPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import CourseClassesPage from './pages/ClassesPage';
 import Navbar from './components/Navbar';
 //import './App.css'
 
@@ -16,6 +17,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path='courses' element={<CoursesPage/>}/>
+        <Route path="/courses/:id/classes" element={<CourseClassesPage />} />
+
         <Route
           path="/dashboard"
           element={

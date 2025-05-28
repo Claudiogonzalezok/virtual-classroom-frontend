@@ -1,0 +1,66 @@
+import React, { useEffect, useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useAuth } from '../context/AuthContext';
+
+function ClassForm({ onSave, selectedClass, courseId }) {
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    if (selectedClass) {
+      setTitle(selectedClass.title);
+      setDescription(selectedClass.description);
+    } else {
+      setTitle('');
+      setDescription('');
+    }
+  }, [selectedClass]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    onSave({
+      title,
+      description,
+      _id: selectedClass?._id,
+      course: courseId,
+    });
+
+    setTitle('');
+    setDescription('');
+  };
+
+  if (!isAdmin) return null; // ✅ Solo visible para admin
+
+  return (
+    <Form onSubmit={handleSubmit} className="mt-4">
+      <Form.Group>
+        <Form.Label>Class Title</Form.Label>
+        <Form.Control
+          type="text"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          required
+        />
+      </Form.Group>
+      <Form.Group className="mt-2">
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={2}
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          required
+        />
+      </Form.Group>
+      <Button type="submit" className="mt-3">
+        {selectedClass ? 'Update Class' : 'Create Class'}
+      </Button>
+    </Form>
+  );
+}
+
+export default ClassForm;
