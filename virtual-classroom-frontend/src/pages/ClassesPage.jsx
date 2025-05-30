@@ -5,7 +5,7 @@ import ClassList from '../components/ClassList';
 import ClassForm from '../components/ClassForm';
 import { useAuth } from '../context/AuthContext';
 
-const CourseClassesPage = () => {
+const ClassesPage = () => {
   const { id } = useParams(); // course ID
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState(null);
@@ -13,7 +13,7 @@ const CourseClassesPage = () => {
 
   const fetchClasses = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/courses/${id}/classes`, {
+      const res = await axios.get(`http://localhost:5000/api/${id}/classes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(res.data);
@@ -25,13 +25,13 @@ const CourseClassesPage = () => {
   const saveClass = async (classData) => {
     try {
       if (classData._id) {
-        await axios.put(`http://localhost:5000/api/courses/${id}/classes/${classData._id}`, classData, {
-          headers: { Authorization: `Bearer ${token}` },
+        await axios.put(`http://localhost:5000/api/classes/${classData._id}`, classData, {
+        headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post(`http://localhost:5000/api/courses/${id}/classes`, classData, {
+          await axios.post(`http://localhost:5000/api/classes`, { ...classData, course: id }, {
           headers: { Authorization: `Bearer ${token}` },
-        });
+          });
       }
       setSelectedClass(null);
       fetchClasses();
@@ -42,7 +42,7 @@ const CourseClassesPage = () => {
 
   const deleteClass = async (classId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/courses/${id}/classes/${classId}`, {
+      await axios.delete(`http://localhost:5000/api/classes/${classId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchClasses();
@@ -66,4 +66,4 @@ const CourseClassesPage = () => {
   );
 };
 
-export default CourseClassesPage;
+export default ClassesPage;

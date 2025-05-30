@@ -10,7 +10,7 @@ function ClassList({ classes, onEdit, onDelete }) {
     <div className="mt-4">
       <h5>Classes</h5>
       {classes.length === 0 ? (
-        <p>No classes available for this course.</p>
+        <p>No hay classes para este curso</p>
       ) : (
         <ul className="list-group">
           {classes.map(classItem => (

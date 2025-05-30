@@ -25,7 +25,6 @@ function CoursesPage() {
   };
 
   const saveCourse = async (course) => {
-    console.log(course)
     try {
       if (course._id) {
         await axios.put(

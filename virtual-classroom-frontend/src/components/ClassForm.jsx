@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 
@@ -8,6 +9,7 @@ function ClassForm({ onSave, selectedClass, courseId }) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const {courseId1}= useParams();
 
   useEffect(() => {
     if (selectedClass) {
