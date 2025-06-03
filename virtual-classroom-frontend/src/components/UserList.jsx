@@ -1,10 +1,14 @@
 import React from 'react';
 
 const UserList = ({ users, onEdit, onDelete }) => {
+     
+    if (users.length === 0) {
+        return <p>No se encontraron usuarios.</p>;
+    }
   return (
     <div className="mt-4">
       <h3>Lista de Usuarios</h3>
-      <table className="table">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Nombre</th>

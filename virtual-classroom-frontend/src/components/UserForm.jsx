@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const UserForm = ({ onSave, selectedUser }) => {
   const [formData, setFormData] = useState({
@@ -32,7 +33,8 @@ const UserForm = ({ onSave, selectedUser }) => {
     setMessage('');
     try {
       await onSave(formData);
-      setMessage('✅ Usuario guardado correctamente.');
+      //setMessage('✅ Usuario guardado correctamente.');
+      //toast.info('Usuario actualizado');
       setFormData({ name: '', email: '', role: 'student', password: '' });
     } catch (error) {
       console.error('Error al guardar usuario:', error);

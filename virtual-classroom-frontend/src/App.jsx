@@ -8,13 +8,17 @@ import CourseClassesPage from './pages/ClassesPage';
 import Navbar from './components/Navbar';
 import AdminPanelPage from './pages/AdminPanelPage';
 import UsersPage from './pages/UsersPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //import './App.css'
 
 function App() {
   return (
     <>
       <Navbar />
+      <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
+        
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
