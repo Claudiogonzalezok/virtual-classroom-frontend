@@ -7,6 +7,7 @@ const UserList = ({ users, onEdit, onDelete }) => {
       <table className="table">
         <thead>
           <tr>
+            <th>Nombre</th>
             <th>Email</th>
             <th>Rol</th>
             <th>Acciones</th>
@@ -15,6 +16,7 @@ const UserList = ({ users, onEdit, onDelete }) => {
         <tbody>
           {users.map(user => (
             <tr key={user._id}>
+              <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
               <td>
