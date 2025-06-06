@@ -10,6 +10,7 @@ import AdminPanelPage from './pages/AdminPanelPage';
 import UsersPage from './pages/UsersPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AssignCourseForm from './components/AssignCourseForm';
 //import './App.css'
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
         <Route path="/admin" element={<AdminPanelPage />} />
         <Route path='/admin/courses' element={<CoursesPage />}/>
         <Route path="/admin/users" element={<UsersPage />} />
-        {/*<Route path="/admin/courses" element={<CourseManagementPage />} />*/}
+        <Route path="/admin/assign-courses" element={<AssignCourseForm />} />
 
 
         <Route

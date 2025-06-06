@@ -9,6 +9,7 @@ const AdminPanelPage = () => {
         <li><Link to="/admin/users">Gestionar Usuarios</Link></li>
         <li><Link to="/admin/courses">Gestionar Cursos</Link></li>
         <li><Link to="/admin/classes">Gestionar Clases</Link></li>
+        <li><Link to="/admin/assign-courses">Asignar Coursos</Link></li>
       </ul>
     </div>
   );
