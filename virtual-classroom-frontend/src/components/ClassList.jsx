@@ -30,14 +30,14 @@ function ClassList({ classes, onEdit, onDelete }) {
                     className="me-2"
                     onClick={() => onEdit(classItem)}
                   >
-                    Edit
+                    Editar
                   </Button>
                   <Button
                     variant="danger"
                     size="sm"
                     onClick={() => onDelete(classItem._id)}
                   >
-                    Delete
+                    Eliminar
                   </Button>
                 </div>
               )}

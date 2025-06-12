@@ -8,7 +8,7 @@ const CustomNavbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/home');
   };
 
   if (!user) return null; // No mostrar navbar si no está logueado
@@ -21,7 +21,7 @@ const CustomNavbar = () => {
         <Navbar.Collapse id="main-navbar">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-            <Nav.Link as={Link} to="/courses">Cursos</Nav.Link>
+            <Nav.Link as={Link} to="/admin">Administracion</Nav.Link>
           </Nav>
           <Nav>
             <NavDropdown title={`Hola, ${user.name}`} align="end">

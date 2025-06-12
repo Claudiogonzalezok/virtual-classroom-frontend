@@ -21,7 +21,7 @@ function CourseForm({ onSave, selectedCourse }) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <Form.Label>Course Title</Form.Label>
+        <Form.Label>Titulo del Curso</Form.Label>
         <Form.Control
           type="text"
           value={title}

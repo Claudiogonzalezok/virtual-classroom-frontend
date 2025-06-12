@@ -11,7 +11,7 @@ function CourseList({ courses, onEdit, onDelete }) {
 
   return (
     <div className="mt-4">
-      <h4>Courses</h4>
+      <h4>Listado de Cursos</h4>
       <ul className="list-group">
         {courses.map(course => (
           <li
@@ -34,7 +34,7 @@ function CourseList({ courses, onEdit, onDelete }) {
                   size="sm"
                   onClick={() => onEdit(course)}
                 >
-                  Edit
+                  Editar
                 </Button>
               )}
 
@@ -44,7 +44,7 @@ function CourseList({ courses, onEdit, onDelete }) {
                   size="sm"
                   onClick={() => onDelete(course._id)}
                 >
-                  Delete
+                  Elimimar
                 </Button>
               )}
             </div>

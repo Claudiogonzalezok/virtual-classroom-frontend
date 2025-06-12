@@ -40,7 +40,7 @@ function ClassForm({ onSave, selectedClass, courseId }) {
   return (
     <Form onSubmit={handleSubmit} className="mt-4">
       <Form.Group>
-        <Form.Label>Class Title</Form.Label>
+        <Form.Label>Titulo de la Clase</Form.Label>
         <Form.Control
           type="text"
           value={title}
@@ -49,7 +49,7 @@ function ClassForm({ onSave, selectedClass, courseId }) {
         />
       </Form.Group>
       <Form.Group className="mt-2">
-        <Form.Label>Description</Form.Label>
+        <Form.Label>Descripcion</Form.Label>
         <Form.Control
           as="textarea"
           rows={2}
@@ -59,7 +59,7 @@ function ClassForm({ onSave, selectedClass, courseId }) {
         />
       </Form.Group>
       <Button type="submit" className="mt-3">
-        {selectedClass ? 'Update Class' : 'Create Class'}
+        {selectedClass ? 'Update Class' : 'Crear Clase'}
       </Button>
     </Form>
   );

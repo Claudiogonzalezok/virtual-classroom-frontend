@@ -39,7 +39,7 @@ const UsersPage = () => {
         });
         toast.info('✏️ Usuario actualizado');
       } else {
-        await axios.post('http://localhost:5000/api/users', userData, {
+        await axios.post('http://localhost:5000/api/auth/register', userData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('✅ Usuario creado correctamente');

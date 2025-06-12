@@ -63,7 +63,7 @@ function CoursesPage() {
 
   return (
     <div className="container mt-4">
-      <h2>Course Management</h2>
+      <h2>ADMINISTRADOR DE CURSOS</h2>
 
       {/* ✅ Solo los admin pueden ver el formulario */}
       {user?.role === 'admin' && (

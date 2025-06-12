@@ -7,7 +7,9 @@ const UserList = ({ users, onEdit, onDelete }) => {
     }
   return (
     <div className="mt-4">
+      <hr />
       <h3>Lista de Usuarios</h3>
+      <hr />
       <table className="table table-striped">
         <thead>
           <tr>

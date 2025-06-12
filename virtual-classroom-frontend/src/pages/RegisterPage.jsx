@@ -27,7 +27,7 @@ const RegisterPage = () => {
       const { token, user } = response.data;
       login(user, token);
       alert('usuario registrado correctamente');
-      navigate('/login');
+      navigate('/home');
     } catch (err) {
       console.error(err.response?.data?.msg || 'Error al registrarse');
       alert(err.response?.data?.msg || 'No se pudo registrar');

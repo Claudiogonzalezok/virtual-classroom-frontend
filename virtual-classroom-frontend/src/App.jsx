@@ -11,16 +11,26 @@ import UsersPage from './pages/UsersPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AssignCourseForm from './components/AssignCourseForm';
+import HomePage from './pages/HomePage';
+import Footer from './components/Footer';
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 //import './App.css'
 
 function App() {
+  useEffect(() => {
+  AOS.init({ duration: 800, once: true });
+  }, []);
   return (
-    <>
+    <div className='d-flex flex-column min-vh-100'>
       <Navbar />
       <ToastContainer position="top-right" autoClose={3000} />
+      <main className="flex-grow-1">
       <Routes>
         
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path='/courses' element={<CoursesPage/>}/>
@@ -41,7 +51,9 @@ function App() {
           }
         />
       </Routes>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
