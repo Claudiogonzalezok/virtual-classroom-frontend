@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Container, Button, Form, Card, Row, Col } from 'react-bootstrap';
@@ -8,6 +8,7 @@ const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('student');
 
   const { login } = useAuth();
@@ -15,6 +16,11 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', {
@@ -26,7 +32,7 @@ const RegisterPage = () => {
 
       const { token, user } = response.data;
       login(user, token);
-      alert('usuario registrado correctamente');
+      alert('Usuario registrado correctamente');
       navigate('/home');
     } catch (err) {
       console.error(err.response?.data?.msg || 'Error al registrarse');
@@ -34,11 +40,17 @@ const RegisterPage = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate('/login');
+  };
+
+  const passwordsMatch = password === confirmPassword;
+
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Row>
         <Col>
-          <Card className="p-4 shadow" style={{ width: '26rem' }}>
+          <Card className="p-4 shadow-lg rounded-4" style={{ width: '26rem' }}>
             <Card.Body>
               <h3 className="text-center mb-4">Registro</h3>
               <Form onSubmit={handleSubmit}>
@@ -75,6 +87,21 @@ const RegisterPage = () => {
                   />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="formConfirmPassword">
+                  <Form.Label>Reingresar contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="********"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    isInvalid={confirmPassword && !passwordsMatch}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Las contraseñas no coinciden
+                  </Form.Control.Feedback>
+                </Form.Group>
+
                 <Form.Group className="mb-4" controlId="formRole">
                   <Form.Label>Rol</Form.Label>
                   <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
@@ -83,10 +110,21 @@ const RegisterPage = () => {
                   </Form.Select>
                 </Form.Group>
 
-                <Button variant="success" type="submit" className="w-100">
-                  Registrarse
-                </Button>
+                <div className="d-grid gap-2">
+                  <Button variant="success" type="submit" disabled={!passwordsMatch}>
+                    Registrarse
+                  </Button>
+                  <Button variant="secondary" onClick={handleCancel}>
+                    Cancelar
+                  </Button>
+                </div>
               </Form>
+
+              <div className="mt-4 text-center">
+                <span>
+                  ¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link>
+                </span>
+              </div>
             </Card.Body>
           </Card>
         </Col>
@@ -96,3 +134,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+

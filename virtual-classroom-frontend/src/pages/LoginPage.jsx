@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Container, Button, Form, Card, Row, Col } from 'react-bootstrap';
@@ -12,7 +12,6 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', {
         email,
@@ -28,11 +27,15 @@ const LoginPage = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate('/home');
+  };
+
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Row>
         <Col>
-          <Card className="p-4 shadow" style={{ width: '24rem' }}>
+          <Card className="p-4 shadow-lg rounded-4" style={{ width: '25rem' }}>
             <Card.Body>
               <h3 className="text-center mb-4">Iniciar sesión</h3>
               <Form onSubmit={handleSubmit}>
@@ -47,7 +50,7 @@ const LoginPage = () => {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formPassword">
+                <Form.Group className="mb-4" controlId="formPassword">
                   <Form.Label>Contraseña</Form.Label>
                   <Form.Control
                     type="password"
@@ -58,10 +61,25 @@ const LoginPage = () => {
                   />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" className="w-100">
-                  Ingresar
-                </Button>
+                <div className="d-grid gap-2">
+                  <Button variant="primary" type="submit">
+                    Ingresar
+                  </Button>
+                  <Button variant="secondary" onClick={handleCancel}>
+                    Cancelar
+                  </Button>
+                </div>
               </Form>
+
+              <div className="mt-4 text-center">
+                <Link to="/forgot-password" className="d-block mb-2">
+                  ¿Olvidaste tu contraseña?
+                </Link>
+                <span>
+                  ¿No tenés cuenta?{' '}
+                  <Link to="/register">Registrate</Link>
+                </span>
+              </div>
             </Card.Body>
           </Card>
         </Col>
@@ -71,3 +89,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
