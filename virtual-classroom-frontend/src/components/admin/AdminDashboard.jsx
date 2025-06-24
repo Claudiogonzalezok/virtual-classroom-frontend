@@ -1,9 +1,14 @@
-// src/pages/admin/AdminDashboard.jsx
+import { Link } from "react-router-dom";
+
 const AdminDashboard = () => {
   return (
-    <div className="container mt-5">
-      <h1 className="display-4">Panel de Administrador</h1>
-      <p className="lead">Aquí puedes gestionar usuarios, cursos y clases.</p>
+    <div>
+      <h2>Panel de Administración</h2>
+      <ul>
+        <li><Link to="/admin/users">Gestionar Usuarios</Link></li>
+        <li><Link to="/admin/courses">Gestionar Cursos</Link></li>
+        <li><Link to="/admin/classes">Gestionar Clases</Link></li>
+      </ul>
     </div>
   );
 };

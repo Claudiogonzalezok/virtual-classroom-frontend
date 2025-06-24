@@ -18,6 +18,9 @@ import Footer from './components/Footer';
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import UploadMaterialPage from "./pages/UploadMaterialPage";
+import ViewMaterialsPage from "./pages/ViewMaterialsPage";
+
 
 
 //import './App.css'
@@ -41,11 +44,29 @@ function App() {
 
         <Route path='/courses' element={<CoursesPage/>}/>
         <Route path="/courses/:id/classes" element={<CourseClassesPage />} />
-
+        //admin routes
         <Route path="/admin" element={<AdminPanelPage />} />
         <Route path='/admin/courses' element={<CoursesPage />}/>
         <Route path="/admin/users" element={<UsersPage />} />
         <Route path="/admin/assign-courses" element={<AssignCourseForm />} />
+
+        // Teacher
+        <Route path="/teacher/courses" element={<ProtectedRoute><CoursesPage /></ProtectedRoute>} />
+        <Route path="/teacher/classes/create" element={<ProtectedRoute><CourseClassesPage /></ProtectedRoute>} />
+        <Route path="/teacher/materials" element={
+          <ProtectedRoute allowedRoles={["teacher"]}>
+            <UploadMaterialPage />
+          </ProtectedRoute>
+         } />
+
+        // Student
+        <Route path="/student/courses" element={<ProtectedRoute><CoursesPage /></ProtectedRoute>} />
+        <Route path="/student/classes" element={<ProtectedRoute><CourseClassesPage /></ProtectedRoute>} />
+        <Route path="/student/materials" element={
+          <ProtectedRoute allowedRoles={["student"]}>
+            <ViewMaterialsPage />
+          </ProtectedRoute>
+        } />
 
 
         <Route

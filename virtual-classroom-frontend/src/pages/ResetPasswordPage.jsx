@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Alert, Spinner } from 'react-bootstrap';
 
 const ResetPasswordPage = () => {
   const { token } = useParams();
@@ -11,6 +11,7 @@ const ResetPasswordPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,15 +22,19 @@ const ResetPasswordPage = () => {
       return setError('Las contraseñas no coinciden');
     }
 
-    try {
-      const res = await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, {
-        password,
-      });
+    setIsLoading(true);
 
-      setMessage(res.data.msg || 'Contraseña restablecida con éxito');
-      setTimeout(() => navigate('/login'), 2000);
+    try {
+      await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, { password });
+
+      setMessage('✅ Contraseña restablecida correctamente. Serás redirigido al login...');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.msg || 'Error al restablecer la contraseña');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,8 +73,14 @@ const ResetPasswordPage = () => {
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button type="submit" variant="success">
-                    Cambiar contraseña
+                  <Button type="submit" variant="success" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Spinner animation="border" size="sm" /> Cambiando...
+                      </>
+                    ) : (
+                      'Cambiar contraseña'
+                    )}
                   </Button>
                 </div>
               </Form>

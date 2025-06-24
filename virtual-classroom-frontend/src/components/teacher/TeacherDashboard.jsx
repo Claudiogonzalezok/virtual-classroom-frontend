@@ -1,11 +1,14 @@
-// src/pages/teacher/TeacherDashboard.jsx
+import { Link } from "react-router-dom";
+
 const TeacherDashboard = () => {
   return (
-    <div className="container mt-5">
-      <h1 className="display-4">Panel de Profesor</h1>
-      <p className="lead">
-        Aquí puedes ver tus cursos, cargar material, calificar y gestionar alumnos.
-      </p>
+    <div>
+      <h2>Panel del Profesor</h2>
+      <ul>
+        <li><Link to="/teacher/courses">Ver Cursos a Cargo</Link></li>
+        <li><Link to="/teacher/classes/create">Agregar Clases</Link></li>
+        <li><Link to="/teacher/materials">Subir Material</Link></li>
+      </ul>
     </div>
   );
 };

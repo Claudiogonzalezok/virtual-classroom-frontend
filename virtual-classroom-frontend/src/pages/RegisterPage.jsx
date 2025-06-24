@@ -33,7 +33,7 @@ const RegisterPage = () => {
       const { token, user } = response.data;
       login(user, token);
       alert('Usuario registrado correctamente');
-      navigate('/home');
+      navigate('/login');
     } catch (err) {
       console.error(err.response?.data?.msg || 'Error al registrarse');
       alert(err.response?.data?.msg || 'No se pudo registrar');
@@ -41,7 +41,7 @@ const RegisterPage = () => {
   };
 
   const handleCancel = () => {
-    navigate('/login');
+    navigate('/home');
   };
 
   const passwordsMatch = password === confirmPassword;

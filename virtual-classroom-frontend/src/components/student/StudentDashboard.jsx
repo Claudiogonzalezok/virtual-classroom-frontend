@@ -1,11 +1,14 @@
-// src/pages/student/StudentDashboard.jsx
+import { Link } from "react-router-dom";
+
 const StudentDashboard = () => {
   return (
-    <div className="container mt-5">
-      <h1 className="display-4">Panel de Estudiante</h1>
-      <p className="lead">
-        Aquí puedes acceder al material de estudio, entregar trabajos y consultar tus calificaciones.
-      </p>
+    <div>
+      <h2>Panel del Estudiante</h2>
+      <ul>
+        <li><Link to="/student/courses">Ver Cursos Inscriptos</Link></li>
+        <li><Link to="/student/classes">Ver Clases</Link></li>
+        <li><Link to="/student/materials">Ver Archivos</Link></li>
+      </ul>
     </div>
   );
 };
