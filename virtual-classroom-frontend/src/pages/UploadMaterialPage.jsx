@@ -1,19 +1,34 @@
 import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext"; // ✅
 
 const UploadMaterialPage = () => {
   const [file, setFile] = useState(null);
+  const { token } = useAuth(); // ✅
 
-  const handleUpload = (e) => {
+  const handleUpload = async (e) => {
     e.preventDefault();
     if (!file) return alert("Seleccioná un archivo");
 
-    // Lógica para subir el archivo
     const formData = new FormData();
     formData.append("file", file);
 
-    // Enviar al backend (axios/fetch)
-    console.log("Archivo preparado para subir:", file.name);
-    // Aquí podés agregar la llamada con axios al backend
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/upload",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      alert("Archivo subido correctamente");
+    } catch (err) {
+      console.error("Error al subir archivo:", err.response?.data || err.message);
+      alert("Error al subir archivo");
+    }
   };
 
   return (

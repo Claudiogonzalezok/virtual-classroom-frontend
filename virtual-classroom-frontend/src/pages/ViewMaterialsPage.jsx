@@ -1,27 +1,43 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ViewMaterialsPage = () => {
   const [materials, setMaterials] = useState([]);
 
   useEffect(() => {
-    // Simulación de fetch
-    setMaterials([
-      { name: "Clase 1 - PDF", url: "/files/clase1.pdf" },
-      { name: "Clase 2 - Video", url: "/files/clase2.mp4" },
-    ]);
-    // En la práctica: axios.get("/api/materials") y luego setMaterials(res.data)
+    const fetchMaterials = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/materials"); // Ajustá el puerto si es necesario
+        setMaterials(res.data);
+      } catch (err) {
+        console.error("Error al obtener materiales:", err);
+      }
+    };
+
+    fetchMaterials();
   }, []);
 
   return (
     <div style={{ padding: "2rem" }}>
       <h2>Materiales Disponibles</h2>
-      <ul>
-        {materials.map((file, i) => (
-          <li key={i}>
-            <a href={file.url} target="_blank" rel="noreferrer">{file.name}</a>
-          </li>
-        ))}
-      </ul>
+      {materials.length === 0 ? (
+        <p>No hay materiales disponibles.</p>
+      ) : (
+        <ul>
+          {materials.map((file, i) => (
+            <li key={i}>
+              <a
+                href={`http://localhost:5000${file.url}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {file.originalname}
+              </a>{" "}
+              <small>(subido por {file.uploadedBy?.name || "desconocido"})</small>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
